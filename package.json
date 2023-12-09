@@ -4,7 +4,8 @@
   "description": "Battleship game vs AI",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "watch": "jest --watch"
   },
   "keywords": [
     "battleship",
