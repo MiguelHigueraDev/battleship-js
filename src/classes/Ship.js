@@ -1,6 +1,6 @@
 class Ship {
-  constructor (length) {
-    this.length = length
+  constructor (type) {
+    this.type = type
     this.hits = 0
     this.sunk = false
   }
@@ -10,7 +10,7 @@ class Ship {
   }
 
   isSunk () {
-    return this.hits >= this.length
+    return this.hits >= this.type
   }
 }
 
