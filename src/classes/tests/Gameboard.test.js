@@ -5,7 +5,7 @@ import Ship from '../Ship'
 describe('Gameboard structure', () => {
   test('Create board', () => {
     const board = new Gameboard()
-    expect(board.board.length).toBe(10)
+    expect(board.cells.length).toBe(10)
   })
 })
 
@@ -20,23 +20,23 @@ describe('Placing ships on gameboard', () => {
   })
   test('Place submarine', () => {
     board.placeShip(testSubmarine, [[1, 1], [1, 2]])
-    expect(board.board[1][1]).toEqual({ isHit: false, ship: testSubmarine })
-    expect(board.board[1][2]).toEqual({ isHit: false, ship: testSubmarine })
-    expect(board.board[0][0]).toEqual({ isHit: false, ship: null })
+    expect(board.cells[1][1]).toEqual({ isHit: false, ship: testSubmarine })
+    expect(board.cells[1][2]).toEqual({ isHit: false, ship: testSubmarine })
+    expect(board.cells[0][0]).toEqual({ isHit: false, ship: null })
   })
 
   test('Place submarine and then try placing another one above it.', () => {
     board.placeShip(testSubmarine, [[1, 1], [1, 2]])
     board.placeShip(testCruiser, [[1, 1], [1, 2], [1, 3]])
-    expect(board.board[1][1]).toEqual({ isHit: false, ship: testSubmarine })
-    expect(board.board[1][2]).toEqual({ isHit: false, ship: testSubmarine })
-    expect(board.board[1][3]).toEqual({ isHit: false, ship: null })
+    expect(board.cells[1][1]).toEqual({ isHit: false, ship: testSubmarine })
+    expect(board.cells[1][2]).toEqual({ isHit: false, ship: testSubmarine })
+    expect(board.cells[1][3]).toEqual({ isHit: false, ship: null })
   })
 
   test('Place cruiser outside range', () => {
     board.placeShip(testCruiser, [[8, 0], [9, 0], [10, 0]])
-    expect(board.board[8][0].ship).toBe(null)
-    expect(board.board[9][0].ship).toBe(null)
+    expect(board.cells[8][0].ship).toBe(null)
+    expect(board.cells[9][0].ship).toBe(null)
   })
 })
 

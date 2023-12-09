@@ -1,13 +1,13 @@
 class Gameboard {
   constructor (size = 10) {
-    const board = []
+    const cells = []
     for (let i = 0; i < size; i++) {
-      board.push([])
+      cells.push([])
       for (let j = 0; j < size; j++) {
-        board[i].push({ ship: null, isHit: false })
+        cells[i].push({ ship: null, isHit: false })
       }
     }
-    this.board = board
+    this.cells = cells
     this.placedShips = []
   }
 
@@ -19,24 +19,28 @@ class Gameboard {
       if (coordinate[0] < 0 || coordinate[0] > 9) return 'invalid-coord'
       if (coordinate[1] < 0 || coordinate[1] > 9) return 'invalid-coord'
       // Check if there is already another ship placed in selected coordinates
-      if (this.board[coordinate[0]][coordinate[1]].ship !== null) return 'already-placed'
+      if (this.cells[coordinate[0]][coordinate[1]].ship !== null) return 'already-placed'
     }
     // All checks successfull. Push ship to board and also store it in array for areAllShipsSunk()
     for (const coordinate of coordinates) {
-      this.board[coordinate[0]][coordinate[1]].ship = ship
+      this.cells[coordinate[0]][coordinate[1]].ship = ship
     }
     this.placedShips.push(ship)
     return true
   }
 
+  checkIfCellIsHit (x, y) {
+    return this.cells[x][y].isHit
+  }
+
   receiveAttack (x, y) {
     // Check if coordinates were already attacked
-    if (this.board[x][y].isHit === false) this.board[x][y].isHit = true
+    if (this.cells[x][y].isHit === false) this.cells[x][y].isHit = true
 
-    if (this.board[x][y].ship !== null) {
-      this.board[x][y].ship.hit()
-      if (this.board[x][y].ship.isSunk()) this.board[x][y].ship.sunk = true
-      this.board[x][y].isHit = true
+    if (this.cells[x][y].ship !== null) {
+      this.cells[x][y].ship.hit()
+      if (this.cells[x][y].ship.isSunk()) this.cells[x][y].ship.sunk = true
+      this.cells[x][y].isHit = true
     }
   }
 
