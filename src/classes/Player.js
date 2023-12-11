@@ -4,6 +4,7 @@ import Ship from './Ship'
 
 class Player {
   constructor () {
+    this.id = crypto.randomUUID()
     this.board = new Gameboard()
     this.ships = this.createFleet()
     this.placeDefaultShips()

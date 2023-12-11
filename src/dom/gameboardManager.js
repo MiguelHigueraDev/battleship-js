@@ -5,24 +5,26 @@ const player2Gameboard = document.querySelector('.player-2-gameboard')
 
 const initPlayers = () => {
   const player1 = new Player()
+  player1Gameboard.setAttribute('data-player', player1.id)
   const player2 = new Player()
+  player2Gameboard.setAttribute('data-player', player2.id)
   return [player1, player2]
 }
 
-const clearCells = () => {
-  player1Gameboard.innerHTML = ''
-  player2Gameboard.innerHTML = ''
+const clearCells = (board) => {
+  board.innerHTML = ''
 }
 
-const loadGameboard = (board, player) => {
-  clearCells()
-  board.cells.forEach((c) => {
+const loadGameboard = (player) => {
+  const board = document.querySelector(`[data-player="${player.id}"]`)
+  clearCells(board)
+  player.board.cells.forEach((c) => {
     c.forEach((ce) => {
       const cell = document.createElement('div')
       cell.classList.add('cell')
       cell.setAttribute('data-coord-x', ce.x)
       cell.setAttribute('data-coord-y', ce.y)
-      cell.addEventListener('click', () => sendHit(cell, board))
+      cell.addEventListener('click', () => sendHit(cell, player))
 
       if (ce.isHit) {
         if (ce.ship !== null) {
@@ -36,22 +38,19 @@ const loadGameboard = (board, player) => {
         }
       }
       if (ce.ship !== null) cell.classList.add('cell-ship')
-      if (player === 'player1') {
-        player1Gameboard.appendChild(cell)
-      } else {
-        player2Gameboard.appendChild(cell)
-      }
+      board.appendChild(cell)
     })
   })
 }
 
-const sendHit = (cell, board) => {
+const sendHit = (cell, player) => {
   const x = cell.getAttribute('data-coord-x')
   const y = cell.getAttribute('data-coord-y')
   // Check if cell was already attacked
-  if (board.cells[x][y].isHit) return
-  board.receiveAttack(x, y)
-  loadGameboard(board)
+  if (player.board.cells[x][y].isHit) return false
+  player.board.receiveAttack(x, y)
+  loadGameboard(player)
+  return true
 }
 
 const gameboardManager = {
