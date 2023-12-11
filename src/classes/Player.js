@@ -31,6 +31,10 @@ class Player {
     this.board.placeShip(this.ships[3], [[1, 1], [1, 2]])
     this.board.placeShip(this.ships[4], [[5, 2], [6, 2]])
   }
+
+  placeRandomShips () {
+
+  }
 }
 
 export default Player

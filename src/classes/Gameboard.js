@@ -4,7 +4,7 @@ class Gameboard {
     for (let i = 0; i < size; i++) {
       cells.push([])
       for (let j = 0; j < size; j++) {
-        cells[i].push({ ship: null, isHit: false })
+        cells[i].push({ ship: null, isHit: false, x: i, y: j })
       }
     }
     this.cells = cells

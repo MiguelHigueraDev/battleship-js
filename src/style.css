@@ -57,12 +57,37 @@ body {
 .cell {
 	width: 40px;
 	height: 40px;
-	background-color: #ddd;
+	background-color: #eee;
 	border: 1px solid rgb(145, 145, 206);
 }
 
+.cell-miss {
+	background-color: #bbb;
+}
+
 .cell-ship {
-	background-color: red;
+	background-color: rgb(83, 71, 245);
+	border: transparent;
+}
+
+.cell-ship-hit {
+	background-color: rgb(255, 60, 16);
+	border: 0;
+}
+
+.cell-ship-sunk {
+	background-color: rgb(241, 23, 19);
+	border: 0;
+}
+
+.cell-ship-sunk::after {
+	display: flex;
+	content: "\274c";
+	align-items: center;
+	height: 40px;
+	font-size: 2rem;
+	align-content: center;
+	justify-content: center;
 }
 
 .player-1-gameboard {
