@@ -1,29 +1,38 @@
+import SIZES from '../constants/sizes'
+import randomUtils from '../helpers/randomUtils'
+
 class Gameboard {
-  constructor (size = 10) {
+  constructor () {
     const cells = []
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < SIZES.BOARD_SIZE; i++) {
       cells.push([])
-      for (let j = 0; j < size; j++) {
-        cells[i].push({ ship: null, isHit: false, x: i, y: j })
+      for (let j = 0; j < SIZES.BOARD_SIZE; j++) {
+        cells[i].push({ ship: null, isHit: false, x: j, y: i })
       }
     }
     this.cells = cells
     this.placedShips = []
   }
 
-  placeShip (ship, coordinates) {
+  placeShip (ship) {
+    const coordinates = randomUtils.getCoords(ship, this.cells)
     // check if shipType matches length
     if (coordinates.length !== ship.type) return 'invalid-length'
     for (const coordinate of coordinates) {
+      const x = coordinate[1]
+      const y = coordinate[0]
       // check if coordinates are outside of range
-      if (coordinate[0] < 0 || coordinate[0] > 9) return 'invalid-coord'
-      if (coordinate[1] < 0 || coordinate[1] > 9) return 'invalid-coord'
+      if (y < 0 || y > 9) return 'invalid-coord'
+      if (x < 0 || x > 9) return 'invalid-coord'
       // Check if there is already another ship placed in selected coordinates
-      if (this.cells[coordinate[0]][coordinate[1]].ship !== null) return 'already-placed'
+      // If there is one try placing it in another coordinates
+      if (this.cells[x][y].ship !== null) {
+        return this.placeShip(ship)
+      }
     }
     // All checks successfull. Push ship to board and also store it in array for areAllShipsSunk()
     for (const coordinate of coordinates) {
-      this.cells[coordinate[0]][coordinate[1]].ship = ship
+      this.cells[coordinate[1]][coordinate[0]].ship = ship
     }
     this.placedShips.push(ship)
     return true

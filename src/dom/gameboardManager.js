@@ -43,13 +43,13 @@ const loadGameboard = (player) => {
   })
 }
 
-const sendHit = (cell, player) => {
+const sendHit = (cell, targetPlayer) => {
   const x = cell.getAttribute('data-coord-x')
   const y = cell.getAttribute('data-coord-y')
   // Check if cell was already attacked
-  if (player.board.cells[x][y].isHit) return false
-  player.board.receiveAttack(x, y)
-  loadGameboard(player)
+  if (targetPlayer.board.cells[y][x].isHit) return false
+  targetPlayer.board.receiveAttack(y, x)
+  loadGameboard(targetPlayer)
   return true
 }
 
