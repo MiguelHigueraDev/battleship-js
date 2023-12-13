@@ -26,11 +26,11 @@ class Player {
   }
 
   placeDefaultShips () {
-    this.board.placeShip(this.ships[0])
-    this.board.placeShip(this.ships[1])
-    this.board.placeShip(this.ships[2])
-    this.board.placeShip(this.ships[3])
-    this.board.placeShip(this.ships[4])
+    this.board.autoPlaceShip(this.ships[0])
+    this.board.autoPlaceShip(this.ships[1])
+    this.board.autoPlaceShip(this.ships[2])
+    this.board.autoPlaceShip(this.ships[3])
+    this.board.autoPlaceShip(this.ships[4])
   }
 
   placeRandomShips () {

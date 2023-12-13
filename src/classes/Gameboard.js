@@ -14,23 +14,17 @@ class Gameboard {
     this.placedShips = []
   }
 
-  placeShip (ship) {
+  autoPlaceShip (ship) {
     const coordinates = randomUtils.getCoords(ship, this.cells)
-    // check if shipType matches length
-    if (coordinates.length !== ship.type) return 'invalid-length'
     for (const coordinate of coordinates) {
       const x = coordinate[1]
       const y = coordinate[0]
-      // check if coordinates are outside of range
-      if (y < 0 || y > 9) return 'invalid-coord'
-      if (x < 0 || x > 9) return 'invalid-coord'
-      // Check if there is already another ship placed in selected coordinates
-      // If there is one try placing it in another coordinates
+      // If there is a ship placed here one try placing it in other coordinates
       if (this.cells[x][y].ship !== null) {
-        return this.placeShip(ship)
+        return this.autoPlaceShip(ship)
       }
     }
-    // All checks successfull. Push ship to board and also store it in array for areAllShipsSunk()
+    // Check successful. Push ship to board and also store it in array for areAllShipsSunk()
     for (const coordinate of coordinates) {
       this.cells[coordinate[1]][coordinate[0]].ship = ship
     }
