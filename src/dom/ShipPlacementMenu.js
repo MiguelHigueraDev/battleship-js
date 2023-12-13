@@ -1,14 +1,13 @@
 import FLEET_COMPOSITION from '../constants/fleetComposition'
 
 const PLACEMENT_MODES = {
-  VERTICAL: 'VERTICAL',
-  HORIZONTAL: 'HORIZONTAL'
+  VERTICAL: 'Vertical',
+  HORIZONTAL: 'Horizontal'
 }
 
 class ShipPlacementMenu {
-  constructor () {
-    this.mode = PLACEMENT_MODES.VERTICAL
-  }
+  static fleet = FLEET_COMPOSITION
+  static mode = PLACEMENT_MODES.HORIZONTAL
 
   static togglePlacementMode () {
     if (this.mode === PLACEMENT_MODES.VERTICAL) {
@@ -22,11 +21,19 @@ class ShipPlacementMenu {
     return this.mode
   }
 
-  static loadShipPlacementMenu () {
-    const ships = FLEET_COMPOSITION
-    for (const ship of ships) {
-      console.log(ship)
+  static getFleet () {
+    return this.fleet
+  }
+
+  static setActiveShip (index) {
+    for (const ship of this.fleet) {
+      ship[1] = 'inactive'
     }
+    this.fleet[index][1] = 'active'
+  }
+
+  static getActiveShip () {
+    return this.fleet.find((ship) => ship[1] === 'active')
   }
 }
 

@@ -61,6 +61,11 @@ body {
 	border: 1px solid rgb(145, 145, 206);
 }
 
+.cell-highlight {
+	background-color: rgb(83, 71, 245);
+	border: transparent;
+}
+
 .cell-miss {
 	background-color: #bbb;
 }
@@ -127,13 +132,19 @@ header {
 	gap: 30px;
 }
 
-.available-ships {
+.ship-selection-menu {
 	background-color: #eee;
 	padding: 30px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	gap: 20px;
+}
+
+.available-ships {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	justify-content: center;
 }
 
 .ship {
