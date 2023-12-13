@@ -1,4 +1,5 @@
 import ShipPlacementMenu from './ShipPlacementMenu'
+import gameManager from './gameManager'
 
 const orientationButton = document.querySelector('.switch-orientation')
 const shipContainer = document.querySelector('.available-ships')
@@ -7,6 +8,7 @@ const startGameButton = document.querySelector('.setup-board-button');
 
 (function () {
   orientationButton.addEventListener('click', () => switchPlacementMode())
+  startGameButton.addEventListener('click', () => startGame())
 })()
 
 const switchPlacementMode = () => {
@@ -103,7 +105,7 @@ const placeShip = (e) => {
     for (const coordinate of adjacentCells) {
       ShipPlacementMenu.cells[coordinate[1]][coordinate[0]].ship = ShipPlacementMenu.getActiveShip()
     }
-    ShipPlacementMenu.addShip(ShipPlacementMenu.getActiveShipIndex())
+    ShipPlacementMenu.addShip(ShipPlacementMenu.getActiveShipIndex(), adjacentCells)
     loadShipPlacementGrid()
     if (ShipPlacementMenu.fleet.length > 0) updateActiveShip(0)
     loadShips()
@@ -115,10 +117,12 @@ const removeShip = (e) => {
   const y = e.target.getAttribute('data-coord-y')
   const ship = ShipPlacementMenu.getShip(x, y)
   // Remove active status
-  console.log(ship)
   ship[1] = 'inactive'
   // Add ship back to fleet
   ShipPlacementMenu.fleet.push(ship)
+  // Remove ship from active fleet
+  const shipIndex = ShipPlacementMenu.activeFleet.findIndex(s => s[2] === ship[2])
+  ShipPlacementMenu.removeShip(shipIndex)
   // Remove ship from DOM
   ShipPlacementMenu.cells.forEach((c) => {
     c.forEach((ce) => {
@@ -166,8 +170,12 @@ const resetOutlines = () => {
   })
 }
 
-const menuManager = {
+const startGame = () => {
+  gameManager.startGame()
+}
+
+const setupManager = {
   updatePlacementMode, loadShips, loadShipPlacementGrid
 }
 
-export default menuManager
+export default setupManager

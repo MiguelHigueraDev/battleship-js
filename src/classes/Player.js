@@ -26,14 +26,14 @@ class Player {
   }
 
   placeDefaultShips () {
+  }
+
+  placeRandomShips () {
     this.board.autoPlaceShip(this.ships[0])
     this.board.autoPlaceShip(this.ships[1])
     this.board.autoPlaceShip(this.ships[2])
     this.board.autoPlaceShip(this.ships[3])
     this.board.autoPlaceShip(this.ships[4])
-  }
-
-  placeRandomShips () {
   }
 }
 

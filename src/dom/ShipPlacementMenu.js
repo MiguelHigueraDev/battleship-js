@@ -56,9 +56,14 @@ class ShipPlacementMenu {
     return this.fleet.indexOf(this.fleet.find((ship) => ship[1] === 'active'))
   }
 
-  static addShip (index) {
+  static addShip (index, adjacentCells) {
+    this.fleet[index][3] = adjacentCells
     this.activeFleet.push(this.fleet[index])
     this.fleet.splice(index, 1)
+  }
+
+  static removeShip (index) {
+    this.activeFleet.splice(index, 1)
   }
 }
 
