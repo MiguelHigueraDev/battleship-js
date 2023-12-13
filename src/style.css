@@ -62,7 +62,7 @@ body {
 }
 
 .cell-highlight {
-	background-color: rgb(83, 71, 245);
+	background-color: rgb(131, 126, 213);
 	border: transparent;
 }
 
@@ -133,6 +133,7 @@ header {
 }
 
 .ship-selection-menu {
+	width: 300px;
 	background-color: #eee;
 	padding: 30px;
 	display: flex;

@@ -1,9 +1,9 @@
-import ShipPlacementMenu from './ShipPlacementMenu'
-import SIZES from '../constants/sizes'
 import Ship from '../classes/Ship'
+import ShipPlacementMenu from './ShipPlacementMenu'
 
 const orientationButton = document.querySelector('.switch-orientation')
-const shipContainer = document.querySelector('.available-ships');
+const shipContainer = document.querySelector('.available-ships')
+const board = document.querySelector('.setup-board');
 
 (function () {
   orientationButton.addEventListener('click', () => switchPlacementMode())
@@ -19,21 +19,30 @@ const updatePlacementMode = () => {
   orientationButton.textContent = orientation
 }
 
+const clearShipPlacementGrid = () => {
+  board.innerHTML = ''
+}
+
 const loadShipPlacementGrid = () => {
-  const board = document.querySelector('.setup-board')
+  clearShipPlacementGrid()
   board.addEventListener('mouseout', () => resetOutlines())
-  for (let i = 0; i < SIZES.BOARD_SIZE; i++) {
-    for (let j = 0; j < SIZES.BOARD_SIZE; j++) {
+  ShipPlacementMenu.cells.forEach((c) => {
+    c.forEach((ce) => {
       const cell = document.createElement('div')
       cell.classList.add('cell')
       cell.classList.add('cell-placement')
-      cell.setAttribute('data-coord-x', j)
-      cell.setAttribute('data-coord-y', i)
+      cell.setAttribute('data-coord-x', ce.x)
+      cell.setAttribute('data-coord-y', ce.y)
       cell.addEventListener('click', (e) => placeShip(e))
       cell.addEventListener('mouseover', (e) => showShipOutline(e))
+
+      if (ce.ship !== null) {
+        cell.classList.add('cell-ship')
+        cell.addEventListener('click', (e) => removeShip(e))
+      }
       board.appendChild(cell)
-    }
-  }
+    })
+  })
 }
 
 const loadShips = () => {
@@ -62,11 +71,53 @@ const updateActiveShip = (index) => {
 }
 
 const placeShip = (e) => {
+  if (ShipPlacementMenu.fleet.length < 1) return
   const x = e.target.getAttribute('data-coord-x')
   const y = e.target.getAttribute('data-coord-y')
-  const activeShip = ShipPlacementMenu.getActiveShip()
-  console.log(ShipPlacementMenu.getActiveShip())
-  console.log(x, y)
+  const orientation = ShipPlacementMenu.getPlacementMode()
+  const activeShipLength = ShipPlacementMenu.getActiveShip()[0]
+  const adjacentCells = getAdjacentCells(Number(x), Number(y), activeShipLength, orientation)
+
+  let valid = true
+  for (const cell of adjacentCells) {
+    const cellX = cell[0]
+    const cellY = cell[1]
+    if (cellX < 0 || cellX > 9 || cellY < 0 || cellY > 9) {
+      valid = false
+    } else {
+      if (ShipPlacementMenu.cells[cellY][cellX].ship !== null) valid = false
+    }
+  }
+  if (valid) {
+    // Add ship
+    for (const coordinate of adjacentCells) {
+      ShipPlacementMenu.cells[coordinate[1]][coordinate[0]].ship = ShipPlacementMenu.getActiveShip()
+    }
+    ShipPlacementMenu.addShip(ShipPlacementMenu.getActiveShipIndex())
+    loadShipPlacementGrid()
+    if (ShipPlacementMenu.fleet.length > 0) updateActiveShip(0)
+    loadShips()
+  }
+}
+
+const removeShip = (e) => {
+  const x = e.target.getAttribute('data-coord-x')
+  const y = e.target.getAttribute('data-coord-y')
+  const ship = ShipPlacementMenu.getShip(x, y)
+  // Remove active status
+  console.log(ship)
+  ship[1] = 'inactive'
+  // Add ship back to fleet
+  ShipPlacementMenu.fleet.push(ship)
+  // Remove ship from DOM
+  ShipPlacementMenu.cells.forEach((c) => {
+    c.forEach((ce) => {
+      if (ce.ship === ship) ce.ship = null
+    })
+  })
+  if (ShipPlacementMenu.fleet.length > 0) updateActiveShip(0)
+  loadShipPlacementGrid()
+  loadShips()
 }
 
 const showShipOutline = (e) => {
@@ -74,6 +125,8 @@ const showShipOutline = (e) => {
   const x = e.target.getAttribute('data-coord-x')
   const y = e.target.getAttribute('data-coord-y')
   const orientation = ShipPlacementMenu.getPlacementMode()
+  if (ShipPlacementMenu.getActiveShip() === undefined) return
+  if (ShipPlacementMenu.cells[y][x].ship !== null) return
   const activeShipLength = ShipPlacementMenu.getActiveShip()[0]
   const adjacentCells = getAdjacentCells(Number(x), Number(y), activeShipLength, orientation)
   for (const cell of adjacentCells) {

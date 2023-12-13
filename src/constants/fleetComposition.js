@@ -1,5 +1,5 @@
 import shipTypes from './shipTypes'
-const FLEET_COMPOSITION = [[shipTypes.CARRIER, 'active'], [shipTypes.BATTLESHIP, 'inactive'], [shipTypes.CRUISER, 'inactive'],
-  [shipTypes.SUBMARINE, 'inactive'], [shipTypes.SUBMARINE, 'inactive']]
+const FLEET_COMPOSITION = [[shipTypes.CARRIER, 'active', 0], [shipTypes.BATTLESHIP, 'inactive', 1], [shipTypes.CRUISER, 'inactive', 2],
+  [shipTypes.SUBMARINE, 'inactive', 3], [shipTypes.SUBMARINE, 'inactive', 4]]
 
 export default FLEET_COMPOSITION
