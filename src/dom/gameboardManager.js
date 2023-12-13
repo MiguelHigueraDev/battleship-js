@@ -1,4 +1,5 @@
 import Player from '../classes/Player'
+import SIZES from '../constants/sizes'
 
 const player1Gameboard = document.querySelector('.player-1-gameboard')
 const player2Gameboard = document.querySelector('.player-2-gameboard')
@@ -13,6 +14,19 @@ const initPlayers = () => {
 
 const clearCells = (board) => {
   board.innerHTML = ''
+}
+
+const loadShipPlacementGrid = () => {
+  const board = document.querySelector('.setup-board')
+  for (let i = 0; i < SIZES.BOARD_SIZE; i++) {
+    for (let j = 0; j < SIZES.BOARD_SIZE; j++) {
+      const cell = document.createElement('div')
+      cell.classList.add('cell')
+      cell.setAttribute('data-coord-x', j)
+      cell.setAttribute('data-coord-y', i)
+      board.appendChild(cell)
+    }
+  }
 }
 
 const loadGameboard = (player) => {
@@ -54,7 +68,7 @@ const sendHit = (cell, targetPlayer) => {
 }
 
 const gameboardManager = {
-  loadGameboard, initPlayers
+  loadGameboard, initPlayers, loadShipPlacementGrid
 }
 
 export default gameboardManager

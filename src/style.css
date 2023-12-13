@@ -90,16 +90,15 @@ body {
 	justify-content: center;
 }
 
-.player-1-gameboard {
+.player-1-gameboard, .player-2-gameboard, .setup-board {
 	display: grid;
 	grid-template-columns: repeat(10, 40px);
 	grid-template-rows: repeat(10, 40px);
 }
 
-.player-2-gameboard {
-	display: grid;
-	grid-template-columns: repeat(10, 40px);
-	grid-template-rows: repeat(10, 40px);
+.setup-board-container {
+	display: flex;
+	justify-content: center;
 }
 
 header {
@@ -117,4 +116,60 @@ header {
 .game-info {
 	font-size: 1.5rem;
 	text-align: center;
+}
+
+.hidden {
+	display: none;
+}
+
+.setup-wrapper {
+	display: flex;
+	gap: 30px;
+}
+
+.available-ships {
+	background-color: #eee;
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 20px;
+}
+
+.ship {
+	display: flex;
+	justify-content: center;
+}
+
+.setup-cell {
+	width: 40px;
+	height: 40px;
+	background-color: #9c9c9c;
+	border: 1px solid rgb(0, 0, 0);
+}
+
+.setup-cell-active {
+	width: 40px;
+	height: 40px;
+	background-color: #5e8cff;
+	border: 1px solid rgb(0, 0, 0);
+}
+
+.switch-orientation {
+	appearance: none;
+	padding: 4px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1rem;
+	border: 2px solid black;
+	background-color: #ddd;
+	border-radius: 8px;
+}
+
+.switch-orientation:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.switch-orientation:active {
+	background-color: #fff;
 }
