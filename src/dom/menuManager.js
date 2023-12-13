@@ -1,4 +1,3 @@
-import Ship from '../classes/Ship'
 import ShipPlacementMenu from './ShipPlacementMenu'
 
 const orientationButton = document.querySelector('.switch-orientation')
