@@ -123,10 +123,6 @@ header {
 	text-align: center;
 }
 
-.hidden {
-	display: none;
-}
-
 .setup-wrapper {
 	display: flex;
 	gap: 30px;
@@ -184,4 +180,40 @@ header {
 
 .switch-orientation:active {
 	background-color: #fff;
+}
+
+.setup-board-button {
+	display: flex;
+	margin-top: 16px;
+	justify-content: center;
+}
+
+.setup-board-button button {
+	appearance: none;
+	padding: 8px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.5rem;
+	border: 2px solid black;
+	background-color: #ddd;
+	border-radius: 8px;
+}
+
+.setup-board-button button:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+
+.setup-board-button button:active {
+	background-color: #fff;
+	cursor: pointer;
+}
+
+
+.hidden {
+	display: none;
+}
+
+.invisible {
+	visibility: hidden;
 }

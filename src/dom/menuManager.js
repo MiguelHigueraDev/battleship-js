@@ -2,7 +2,8 @@ import ShipPlacementMenu from './ShipPlacementMenu'
 
 const orientationButton = document.querySelector('.switch-orientation')
 const shipContainer = document.querySelector('.available-ships')
-const board = document.querySelector('.setup-board');
+const board = document.querySelector('.setup-board')
+const startGameButton = document.querySelector('.setup-board-button');
 
 (function () {
   orientationButton.addEventListener('click', () => switchPlacementMode())
@@ -61,6 +62,16 @@ const loadShips = () => {
       shipDiv.appendChild(cell)
     }
     shipContainer.appendChild(shipDiv)
+  }
+  toggleStartGameButton()
+}
+
+const toggleStartGameButton = () => {
+  const fleet = ShipPlacementMenu.getFleet()
+  if (fleet.length === 0) {
+    startGameButton.classList.remove('invisible')
+  } else {
+    startGameButton.classList.add('invisible')
   }
 }
 
