@@ -1,6 +1,7 @@
 import shipTypes from '../../constants/shipTypes'
 import Gameboard from '../Gameboard'
 import Ship from '../Ship'
+// TODO: update tests to reflect new Gameboard class
 
 describe('Gameboard structure', () => {
   test('Create board', () => {
