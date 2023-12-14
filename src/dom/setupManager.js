@@ -96,9 +96,23 @@ const placeShip = (e) => {
     const cellX = cell[0]
     const cellY = cell[1]
     if (cellX < 0 || cellX > 9 || cellY < 0 || cellY > 9) {
+      // Check if ship goes out of bounds
       valid = false
     } else {
+      // Check if there is already another ship placed in one of the coordinate pairs
       if (ShipPlacementMenu.cells[cellY][cellX].ship !== null) valid = false
+
+      // Also check that there are no ships adjacent to it making sure there is one space free in all directions
+      // Cardinal directions
+      if (cellY + 1 <= 9) if (ShipPlacementMenu.cells[cellY + 1][cellX].ship !== null) valid = false
+      if (cellY - 1 >= 0) if (ShipPlacementMenu.cells[cellY - 1][cellX].ship !== null) valid = false
+      if (cellX + 1 <= 9) if (ShipPlacementMenu.cells[cellY][cellX + 1].ship !== null) valid = false
+      if (cellX - 1 >= 9) if (ShipPlacementMenu.cells[cellY][cellX - 1].ship !== null) valid = false
+      // Diagonals
+      if (cellY + 1 <= 9 && cellX - 1 >= 0) if (ShipPlacementMenu.cells[cellY + 1][cellX - 1].ship !== null) valid = false // NW
+      if (cellY + 1 <= 9 && cellX + 1 <= 9) if (ShipPlacementMenu.cells[cellY + 1][cellX + 1].ship !== null) valid = false // NE
+      if (cellY - 1 >= 0 && cellX - 1 >= 0) if (ShipPlacementMenu.cells[cellY - 1][cellX - 1].ship !== null) valid = false // SW
+      if (cellY - 1 >= 0 && cellX + 1 <= 9) if (ShipPlacementMenu.cells[cellY - 1][cellX + 1].ship !== null) valid = false // SE
     }
   }
   if (valid) {
