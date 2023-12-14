@@ -75,6 +75,11 @@ body {
 	border: transparent;
 }
 
+.cell-highlight-error {
+	background-color: rgb(213, 126, 126);
+	border: transparent;
+}
+
 .cell-ship-hit {
 	background-color: rgb(255, 60, 16);
 	border: 0;

@@ -103,16 +103,9 @@ const placeShip = (e) => {
       if (ShipPlacementMenu.cells[cellY][cellX].ship !== null) valid = false
 
       // Also check that there are no ships adjacent to it making sure there is one space free in all directions
-      // Cardinal directions
-      if (cellY + 1 <= 9) if (ShipPlacementMenu.cells[cellY + 1][cellX].ship !== null) valid = false
-      if (cellY - 1 >= 0) if (ShipPlacementMenu.cells[cellY - 1][cellX].ship !== null) valid = false
-      if (cellX + 1 <= 9) if (ShipPlacementMenu.cells[cellY][cellX + 1].ship !== null) valid = false
-      if (cellX - 1 >= 9) if (ShipPlacementMenu.cells[cellY][cellX - 1].ship !== null) valid = false
-      // Diagonals
-      if (cellY + 1 <= 9 && cellX - 1 >= 0) if (ShipPlacementMenu.cells[cellY + 1][cellX - 1].ship !== null) valid = false // NW
-      if (cellY + 1 <= 9 && cellX + 1 <= 9) if (ShipPlacementMenu.cells[cellY + 1][cellX + 1].ship !== null) valid = false // NE
-      if (cellY - 1 >= 0 && cellX - 1 >= 0) if (ShipPlacementMenu.cells[cellY - 1][cellX - 1].ship !== null) valid = false // SW
-      if (cellY - 1 >= 0 && cellX + 1 <= 9) if (ShipPlacementMenu.cells[cellY - 1][cellX + 1].ship !== null) valid = false // SE
+      valid = checkDirections(cellX, cellY)
+      // Break loop if one of directions returns false
+      if (!valid) return
     }
   }
   if (valid) {
@@ -125,6 +118,21 @@ const placeShip = (e) => {
     if (ShipPlacementMenu.fleet.length > 0) updateActiveShip(0)
     loadShips()
   }
+}
+
+const checkDirections = (x, y) => {
+  if (x > 9 || x < 0 || y > 9 || x < 0) return false
+  // Cardinal directions
+  if (y + 1 <= 9) if (ShipPlacementMenu.cells[y + 1][x].ship !== null) return false // right
+  if (y - 1 >= 0) if (ShipPlacementMenu.cells[y - 1][x].ship !== null) return false // left
+  if (x + 1 <= 9) if (ShipPlacementMenu.cells[y][x + 1].ship !== null) return false // up
+  if (x - 1 >= 0) if (ShipPlacementMenu.cells[y][x - 1].ship !== null) return false // down
+  // Diagonals
+  if (y + 1 <= 9 && x - 1 >= 0) if (ShipPlacementMenu.cells[y + 1][x - 1].ship !== null) return false // NW
+  if (y + 1 <= 9 && x + 1 <= 9) if (ShipPlacementMenu.cells[y + 1][x + 1].ship !== null) return false // NE
+  if (y - 1 >= 0 && x - 1 >= 0) if (ShipPlacementMenu.cells[y - 1][x - 1].ship !== null) return false // SW
+  if (y - 1 >= 0 && x + 1 <= 9) if (ShipPlacementMenu.cells[y - 1][x + 1].ship !== null) return false // SE
+  return true
 }
 
 const removeShip = (e) => {
@@ -163,9 +171,16 @@ const showShipOutline = (e) => {
   const activeShipLength = ShipPlacementMenu.getActiveShip()[0]
   const adjacentCells = getAdjacentCells(Number(x), Number(y), activeShipLength, orientation)
   for (const cell of adjacentCells) {
-    const cellDiv = document.querySelector(`.cell-placement[data-coord-x="${cell[0]}"][data-coord-y="${cell[1]}"]`)
-    if (cellDiv !== null) {
-      cellDiv.classList.add('cell-highlight')
+    const [x, y] = cell
+    const cellDiv = document.querySelector(`.cell-placement[data-coord-x="${x}"][data-coord-y="${y}"]`)
+    if (checkDirections(x, y)) {
+      if (cellDiv !== null) {
+        cellDiv.classList.add('cell-highlight')
+      }
+    } else {
+      if (cellDiv !== null) {
+        cellDiv.classList.add('cell-highlight-error')
+      }
     }
   }
 }
@@ -186,6 +201,7 @@ const resetHighlights = () => {
   const cells = document.querySelectorAll('.cell-placement')
   cells.forEach((c) => {
     c.classList.remove('cell-highlight')
+    c.classList.remove('cell-highlight-error')
   })
 }
 
