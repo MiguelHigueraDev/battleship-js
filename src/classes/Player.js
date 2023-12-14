@@ -38,18 +38,20 @@ class Player {
     if (this.attackStack.length > 0) {
       // Check stacked attacks instead of trying a random attack
       const attack = this.attackStack.pop()
+      // Check if cell is already hit
+      console.log(attack)
       const attackResponse = enemyBoard.receiveAttack(...attack)
       if (attackResponse === 'hit') {
         const [x, y, direction] = attack
         // Check if direction doesn't go out of bounds, then attack direction again
-        if (direction === 'top') {
+        if (direction === 'up') {
           if (x - 1 >= 0) {
-            this.attackStack.push([x - 1, y, 'top'])
+            this.attackStack.push([x - 1, y, 'up'])
           }
         }
-        if (direction === 'bottom') {
+        if (direction === 'down') {
           if (x + 1 <= 9) {
-            this.attackStack.push([x + 1, y, 'bottom'])
+            this.attackStack.push([x + 1, y, 'down'])
           }
         }
         if (direction === 'left') {
@@ -62,6 +64,9 @@ class Player {
             this.attackStack.push([x, y + 1, 'right'])
           }
         }
+      } else if (attackResponse === 'sunk') {
+        // Clear remaining attacks if ship is already sunk
+        this.attackStack = []
       }
       // console.log(JSON.parse(JSON.stringify(this.attackStack)))
     } else {
@@ -75,10 +80,10 @@ class Player {
       if (attackResponse === 'hit') {
         // Check all sides that don't go out of bounds
         if (x - 1 >= 0) {
-          this.attackStack.push([x - 1, y, 'top'])
+          this.attackStack.push([x - 1, y, 'up'])
         }
         if (x + 1 <= 9) {
-          this.attackStack.push([x + 1, y, 'bottom'])
+          this.attackStack.push([x + 1, y, 'down'])
         }
         if (y - 1 >= 0) {
           this.attackStack.push([x, y - 1, 'left'])
