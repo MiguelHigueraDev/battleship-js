@@ -40,6 +40,7 @@ class Gameboard {
       for (const co of coord[3]) {
         this.cells[co[1]][co[0]].ship = ship
       }
+      this.placedShips.push(ship)
     }
   }
 

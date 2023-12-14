@@ -65,7 +65,7 @@ const getCoords = (ship, board) => {
 }
 
 const randomUtils = {
-  getCoords
+  getCoords, getRandomCoord
 }
 
 export default randomUtils
