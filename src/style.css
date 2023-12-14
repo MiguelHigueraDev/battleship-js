@@ -66,6 +66,10 @@ body {
 	border: transparent;
 }
 
+.cell-hover:hover {
+	background-color: #ccc;
+}
+
 .cell-miss {
 	background-color: #bbb;
 }

@@ -27,9 +27,13 @@ const loadGameboard = (player) => {
           cell.classList.add('cell-miss')
         }
       }
-      // Only show human player's ships
+
       if (player.id !== 'ai') {
+        // Only show human player's ships
         if (ce.ship !== null) cell.classList.add('cell-ship')
+      } else {
+        // Add hover class to AI board
+        if (!ce.isHit) cell.classList.add('cell-hover')
       }
       board.appendChild(cell)
     })
