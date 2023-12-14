@@ -49,7 +49,11 @@ class Gameboard {
   }
 
   receiveAttack (x, y) {
-    if (this.cells[x][y].isHit === false) this.cells[x][y].isHit = true
+    if (this.cells[x][y].isHit) {
+      console.error(`Error: cell already hit at ${y}, ${x}. Retrying...`)
+      return 'retry'
+    }
+    this.cells[x][y].isHit = true
 
     if (this.cells[x][y].ship !== null) {
       this.cells[x][y].ship.hit()

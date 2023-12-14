@@ -66,6 +66,9 @@ class Player {
       } else if (attackResponse === 'sunk') {
         // Clear remaining attacks if ship is already sunk
         this.attackStack = []
+      } else if (attackResponse === 'retry') {
+        // Try attacking again
+        this.aiAttack(enemyBoard)
       }
     } else {
       // Stack is empty, perform random attack instead
@@ -89,6 +92,8 @@ class Player {
         if (y + 1 <= 9) {
           if (!enemyBoard.checkIfCellIsHit(x, y + 1)) this.attackStack.push([x, y + 1, 'right'])
         }
+      } else if (attackResponse === 'retry') {
+        this.aiAttack(enemyBoard)
       }
     }
   }
