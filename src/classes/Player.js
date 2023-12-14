@@ -3,11 +3,15 @@ import Gameboard from './Gameboard'
 import Ship from './Ship'
 
 class Player {
-  constructor () {
+  constructor (coords) {
     this.id = crypto.randomUUID()
     this.board = new Gameboard()
     this.ships = this.createFleet()
-    this.placeDefaultShips()
+    if (coords !== undefined) {
+      this.board.placeShips(coords)
+    } else {
+      this.placeRandomShips()
+    }
   }
 
   createFleet () {
@@ -23,9 +27,6 @@ class Player {
     // Check if cell was hit before
     if (enemyBoard.checkIfCellIsHit(x, y)) return
     enemyBoard.receiveAttack(x, y)
-  }
-
-  placeDefaultShips () {
   }
 
   placeRandomShips () {

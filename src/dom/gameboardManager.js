@@ -1,16 +1,3 @@
-import Player from '../classes/Player'
-
-const player1Gameboard = document.querySelector('.player-1-gameboard')
-const player2Gameboard = document.querySelector('.player-2-gameboard')
-
-const initPlayers = () => {
-  const player1 = new Player()
-  player1Gameboard.setAttribute('data-player', player1.id)
-  const player2 = new Player()
-  player2Gameboard.setAttribute('data-player', player2.id)
-  return [player1, player2]
-}
-
 const clearCells = (board) => {
   board.innerHTML = ''
 }
@@ -54,7 +41,7 @@ const sendHit = (cell, targetPlayer) => {
 }
 
 const gameboardManager = {
-  loadGameboard, initPlayers
+  loadGameboard
 }
 
 export default gameboardManager

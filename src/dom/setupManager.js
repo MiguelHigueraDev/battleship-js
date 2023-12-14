@@ -9,6 +9,7 @@ const startGameButton = document.querySelector('.setup-board-button');
 (function () {
   orientationButton.addEventListener('click', () => switchPlacementMode())
   startGameButton.addEventListener('click', () => startGame())
+  document.addEventListener('keydown', (e) => handleKeyPresses(e))
 })()
 
 const switchPlacementMode = () => {
@@ -27,7 +28,7 @@ const clearShipPlacementGrid = () => {
 
 const loadShipPlacementGrid = () => {
   clearShipPlacementGrid()
-  board.addEventListener('mouseout', () => resetOutlines())
+  board.addEventListener('mouseout', () => resetHighlights())
   ShipPlacementMenu.cells.forEach((c) => {
     c.forEach((ce) => {
       const cell = document.createElement('div')
@@ -135,12 +136,16 @@ const removeShip = (e) => {
 }
 
 const showShipOutline = (e) => {
-  resetOutlines()
+  resetHighlights()
   const x = e.target.getAttribute('data-coord-x')
   const y = e.target.getAttribute('data-coord-y')
   const orientation = ShipPlacementMenu.getPlacementMode()
+  // Fixes bug in case there are no ships to add
   if (ShipPlacementMenu.getActiveShip() === undefined) return
-  if (ShipPlacementMenu.cells[y][x].ship !== null) return
+  if (ShipPlacementMenu.cells[y][x].ship !== null) {
+    // Todo: Highlight ship to be removed
+    return
+  }
   const activeShipLength = ShipPlacementMenu.getActiveShip()[0]
   const adjacentCells = getAdjacentCells(Number(x), Number(y), activeShipLength, orientation)
   for (const cell of adjacentCells) {
@@ -163,11 +168,15 @@ const getAdjacentCells = (x, y, length, orientation) => {
   return cells
 }
 
-const resetOutlines = () => {
+const resetHighlights = () => {
   const cells = document.querySelectorAll('.cell-placement')
   cells.forEach((c) => {
     c.classList.remove('cell-highlight')
   })
+}
+
+const handleKeyPresses = (e) => {
+  if (e.key === 'r') switchPlacementMode()
 }
 
 const startGame = () => {

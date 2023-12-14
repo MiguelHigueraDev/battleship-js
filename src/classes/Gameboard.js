@@ -1,5 +1,6 @@
 import SIZES from '../constants/sizes'
 import randomUtils from '../helpers/randomUtils'
+import Ship from './Ship'
 
 class Gameboard {
   constructor () {
@@ -30,6 +31,16 @@ class Gameboard {
     }
     this.placedShips.push(ship)
     return true
+  }
+
+  placeShips (coords) {
+    // Create ships
+    for (const coord of coords) {
+      const ship = new Ship(coord[0])
+      for (const co of coord[3]) {
+        this.cells[co[1]][co[0]].ship = ship
+      }
+    }
   }
 
   checkIfCellIsHit (x, y) {

@@ -120,6 +120,12 @@ header {
 
 .game-info {
 	font-size: 1.5rem;
+	margin-bottom: 16px;
+	text-align: center;
+}
+
+.game-tips {
+	font-size: 0.9rem;
 	text-align: center;
 }
 
