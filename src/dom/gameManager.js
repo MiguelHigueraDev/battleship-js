@@ -46,14 +46,23 @@ const nextAiTurn = () => {
 }
 
 const checkWinner = () => {
+  if (ai.board.areAllShipsSunk() || player.board.areAllShipsSunk()) {
+    const cells = player2Gameboard.querySelectorAll('div')
+    cells.forEach((ce) => {
+      // Remove hover class and event listeners
+      ce.classList.remove('cell-hover')
+      const clone = ce.cloneNode(true)
+      ce.parentNode.replaceChild(clone, ce)
+    })
+  }
   if (player.board.areAllShipsSunk()) {
     // AI Wins
-    alert('Ai wins!')
+    updateGameStatus('AI Wins!')
     return true
   }
   if (ai.board.areAllShipsSunk()) {
     // Player wins
-    alert('Player wins!')
+    updateGameStatus('You win!')
     return true
   }
   return false
