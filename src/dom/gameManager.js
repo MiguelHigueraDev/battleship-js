@@ -40,7 +40,7 @@ const updateGameStatus = (str) => {
 }
 
 const nextAiTurn = () => {
-  ai.randomAttack(player.board)
+  ai.aiAttack(player.board)
   checkWinner()
   gameboardManager.loadGameboard(player)
 }

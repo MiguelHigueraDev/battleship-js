@@ -49,13 +49,18 @@ class Gameboard {
   }
 
   receiveAttack (x, y) {
-    // Check if coordinates were already attacked
     if (this.cells[x][y].isHit === false) this.cells[x][y].isHit = true
 
     if (this.cells[x][y].ship !== null) {
       this.cells[x][y].ship.hit()
-      if (this.cells[x][y].ship.isSunk()) this.cells[x][y].ship.sunk = true
-      this.cells[x][y].isHit = true
+      if (this.cells[x][y].ship.isSunk()) {
+        this.cells[x][y].ship.sunk = true
+        return 'sunk'
+      } else {
+        return 'hit'
+      }
+    } else {
+      return 'miss'
     }
   }
 
