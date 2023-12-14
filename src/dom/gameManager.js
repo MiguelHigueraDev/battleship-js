@@ -24,7 +24,7 @@ const startGame = () => {
   player = new Player(ShipPlacementMenu.activeFleet)
   player1Gameboard.setAttribute('data-player', player.id)
   gameboardManager.loadGameboard(player)
-  updateGameStatus('Click on enemy board to shoot')
+  updateGameStatus('Click on enemy board to fire a shot')
   toggleSetupVisibility()
 }
 
@@ -41,35 +41,43 @@ const updateGameStatus = (str) => {
 
 const nextAiTurn = () => {
   ai.aiAttack(player.board)
-  checkWinner()
   gameboardManager.loadGameboard(player)
+  checkWinner()
 }
 
 const checkWinner = () => {
-  if (ai.board.areAllShipsSunk() || player.board.areAllShipsSunk()) {
-    const cells = player2Gameboard.querySelectorAll('div')
-    cells.forEach((ce) => {
-      // Remove hover class and event listeners
-      ce.classList.remove('cell-hover')
-      const clone = ce.cloneNode(true)
-      ce.parentNode.replaceChild(clone, ce)
-    })
-  }
   if (player.board.areAllShipsSunk()) {
     // AI Wins
+    removeInteraction()
     updateGameStatus('AI Wins!')
     return true
   }
   if (ai.board.areAllShipsSunk()) {
     // Player wins
+    removeInteraction()
     updateGameStatus('You win!')
     return true
   }
   return false
 }
 
+const removeInteraction = () => {
+  const cells = player2Gameboard.querySelectorAll('div')
+  cells.forEach((ce) => {
+    // Remove hover class and event listeners
+    ce.classList.remove('cell-hover')
+    const clone = ce.cloneNode(true)
+    ce.parentNode.replaceChild(clone, ce)
+  })
+  highlightRemainingAIShips()
+}
+
+const highlightRemainingAIShips = () => {
+  gameboardManager.loadGameboard(ai, true)
+}
+
 const gameManager = {
-  startGame, nextAiTurn, checkWinner
+  startGame, nextAiTurn, checkWinner, removeInteraction
 }
 
 export default gameManager
