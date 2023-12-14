@@ -39,7 +39,6 @@ class Player {
       // Check stacked attacks instead of trying a random attack
       const attack = this.attackStack.pop()
       // Check if cell is already hit
-      console.log(attack)
       const attackResponse = enemyBoard.receiveAttack(...attack)
       if (attackResponse === 'hit') {
         const [x, y, direction] = attack
@@ -68,7 +67,6 @@ class Player {
         // Clear remaining attacks if ship is already sunk
         this.attackStack = []
       }
-      // console.log(JSON.parse(JSON.stringify(this.attackStack)))
     } else {
       // Stack is empty, perform random attack instead
       const x = randomUtils.getRandomCoord()
@@ -78,18 +76,18 @@ class Player {
       // Check attack response, if ship is hit add attacks to stack
       const attackResponse = enemyBoard.receiveAttack(x, y)
       if (attackResponse === 'hit') {
-        // Check all sides that don't go out of bounds
+        // Check all sides that don't go out of bounds and aren't already hit
         if (x - 1 >= 0) {
-          this.attackStack.push([x - 1, y, 'up'])
+          if (!enemyBoard.checkIfCellIsHit(x - 1, y)) this.attackStack.push([x - 1, y, 'up'])
         }
         if (x + 1 <= 9) {
-          this.attackStack.push([x + 1, y, 'down'])
+          if (!enemyBoard.checkIfCellIsHit(x + 1, y)) this.attackStack.push([x + 1, y, 'down'])
         }
         if (y - 1 >= 0) {
-          this.attackStack.push([x, y - 1, 'left'])
+          if (!enemyBoard.checkIfCellIsHit(x, y - 1)) this.attackStack.push([x, y - 1, 'left'])
         }
         if (y + 1 <= 9) {
-          this.attackStack.push([x, y + 1, 'right'])
+          if (!enemyBoard.checkIfCellIsHit(x, y + 1)) this.attackStack.push([x, y + 1, 'right'])
         }
       }
     }
