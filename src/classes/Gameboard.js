@@ -24,6 +24,17 @@ class Gameboard {
       if (this.cells[x][y].ship !== null) {
         return this.autoPlaceShip(ship)
       }
+      // Also check if there are directly adjacent ships, make sure there is at least 1 space between each ship
+      // Cardinal directions
+      if (y + 1 <= 9) if (this.cells[x][y + 1].ship !== null) return this.autoPlaceShip(ship)
+      if (y - 1 >= 0) if (this.cells[x][y - 1].ship !== null) return this.autoPlaceShip(ship)
+      if (x + 1 <= 9) if (this.cells[x + 1][y].ship !== null) return this.autoPlaceShip(ship)
+      if (x - 1 >= 0) if (this.cells[x - 1][y].ship !== null) return this.autoPlaceShip(ship)
+      // Diagonals
+      if (y + 1 <= 9 && x - 1 >= 0) if (this.cells[x - 1][y + 1].ship !== null) return this.autoPlaceShip(ship) // NW
+      if (y + 1 <= 9 && x + 1 <= 9) if (this.cells[x + 1][y + 1].ship !== null) return this.autoPlaceShip(ship) // NE
+      if (y - 1 >= 0 && x - 1 >= 0) if (this.cells[x - 1][y - 1].ship !== null) return this.autoPlaceShip(ship) // SW
+      if (y - 1 >= 0 && x + 1 <= 9) if (this.cells[x + 1][y - 1].ship !== null) return this.autoPlaceShip(ship) // SE
     }
     // Check successful. Push ship to board and also store it in array for areAllShipsSunk()
     for (const coordinate of coordinates) {
