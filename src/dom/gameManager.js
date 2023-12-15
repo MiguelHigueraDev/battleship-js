@@ -47,13 +47,11 @@ const nextAiTurn = () => {
 
 const checkWinner = () => {
   if (player.board.areAllShipsSunk()) {
-    // AI Wins
     removeInteraction()
     updateGameStatus('AI Wins!')
     return true
   }
   if (ai.board.areAllShipsSunk()) {
-    // Player wins
     removeInteraction()
     updateGameStatus('You win!')
     return true

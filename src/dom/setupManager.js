@@ -93,8 +93,7 @@ const placeShip = (e) => {
 
   let valid = true
   for (const cell of adjacentCells) {
-    const cellX = cell[0]
-    const cellY = cell[1]
+    const [cellX, cellY] = cell
     if (cellX < 0 || cellX > 9 || cellY < 0 || cellY > 9) {
       // Check if ship goes out of bounds
       valid = false
@@ -125,13 +124,13 @@ const checkDirections = (x, y) => {
   // Cardinal directions
   if (y + 1 <= 9) if (ShipPlacementMenu.cells[y + 1][x].ship !== null) return false // right
   if (y - 1 >= 0) if (ShipPlacementMenu.cells[y - 1][x].ship !== null) return false // left
-  if (x + 1 <= 9) if (ShipPlacementMenu.cells[y][x + 1].ship !== null) return false // up
-  if (x - 1 >= 0) if (ShipPlacementMenu.cells[y][x - 1].ship !== null) return false // down
+  if (x + 1 <= 9) if (ShipPlacementMenu.cells[y][x + 1].ship !== null) return false // down
+  if (x - 1 >= 0) if (ShipPlacementMenu.cells[y][x - 1].ship !== null) return false // up
   // Diagonals
-  if (y + 1 <= 9 && x - 1 >= 0) if (ShipPlacementMenu.cells[y + 1][x - 1].ship !== null) return false // NW
-  if (y + 1 <= 9 && x + 1 <= 9) if (ShipPlacementMenu.cells[y + 1][x + 1].ship !== null) return false // NE
-  if (y - 1 >= 0 && x - 1 >= 0) if (ShipPlacementMenu.cells[y - 1][x - 1].ship !== null) return false // SW
-  if (y - 1 >= 0 && x + 1 <= 9) if (ShipPlacementMenu.cells[y - 1][x + 1].ship !== null) return false // SE
+  if (y + 1 <= 9 && x - 1 >= 0) if (ShipPlacementMenu.cells[y + 1][x - 1].ship !== null) return false // SW
+  if (y + 1 <= 9 && x + 1 <= 9) if (ShipPlacementMenu.cells[y + 1][x + 1].ship !== null) return false // SE
+  if (y - 1 >= 0 && x - 1 >= 0) if (ShipPlacementMenu.cells[y - 1][x - 1].ship !== null) return false // NW
+  if (y - 1 >= 0 && x + 1 <= 9) if (ShipPlacementMenu.cells[y - 1][x + 1].ship !== null) return false // NE
   return true
 }
 
