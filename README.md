@@ -5,7 +5,11 @@ Live demo: https://battleship.miguelhiguera.dev/
 
 ## Features
 - Player vs. AI
-- Smart AI (hits adjacent tiles after hitting a ship)
+- Smart AI (hits adjacent tiles after hitting a ship using a depth-first search-like algorithm)
+
+## TODO
+- Polish UI
+- Add sounds
 
 ## Build steps
 - Clone repository
