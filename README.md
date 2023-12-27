@@ -8,6 +8,7 @@ Live demo: https://battleship.miguelhiguera.dev/
 - Smart AI (hits adjacent tiles after hitting a ship using a depth-first search-like algorithm)
 
 ## TODO
+- Add restart screen
 - Polish UI
 - Add sounds
 
